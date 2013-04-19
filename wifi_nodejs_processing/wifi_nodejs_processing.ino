@@ -76,19 +76,25 @@ void setup() {
     Serial.println("reading..");
     inByte = client.read();
     Serial.println(inByte);
+    client.flush();  
+    
   }
-}
+}  
 
 
 void loop() {                    
   // if there are incoming bytes available 
   // from the server, read them and print them:
-  while (client.available()) {
-   // Serial.println("reading..");
+ while (client.connected()) {
+  //  Serial.println("still connected");
+    if (client.available()) {
+//   Serial.println("reading..");
     char c = client.read();
- // if (!c == -1){  
-    Serial.println(c, DEC);
-  //}
+ // if (!c == '-1'){  
+    Serial.print  (c);
+  }
+  // }
+ }
     //  Serial.println(c);
     //  client.flush();
     //  if(millis() %1000 < 3){
@@ -101,11 +107,11 @@ void loop() {
 
 
 
-  } 
+  
 
   // if the server's disconnected, stop the client:
   // if (!client.connected()) {
-  while (!client.connected()) {
+  if (!client.connected()) {
     Serial.println();
     Serial.println("disconnecting from server.");
     client.stop();

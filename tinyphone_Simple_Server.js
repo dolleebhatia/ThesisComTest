@@ -3,7 +3,7 @@ var remote_net = require('net');
 
 var REMOTE_PORT=12002;
 
-var AGI_HOST = 'XXXXXXXX'; //rackspace server
+var AGI_HOST = '127.0.0.1';
 var AGI_PORT = 12001;
 
 /**
@@ -24,7 +24,7 @@ remote_net.createServer(function(sock){
     sock.on('close', function() {
         for(var i = 0; i < remoteClients.length; i++) {
             if(remoteClients[i] == sock) { //remove client
-                remoteClients.splice(i,1);
+                //remoteClients.splice(i,1);
                 break;
             }
         }
@@ -60,7 +60,6 @@ agi_net.createServer(function(sock){
             client.write(data);
         }
     });
-}).listen(AGI_PORT, AGI_HOST);
+}).listen(AGI_PORT);
 
-console.log('Server listening for AGI connections on ' + AGI_HOST +':'+ AGI_PORT);
-
+console.log('Server listening for AGI connections on ' + AGI_HOST +':'+REMOTE_PORT);
